@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
@@ -46,7 +47,7 @@ class PhotoController extends Controller
      */
     public function show(Photo $photo)
     {
-        //
+        return response()->file(Storage::path($photo->filepath));
     }
 
     /**

@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
 class PhotoSubmissionController extends Controller
 {
@@ -13,7 +20,9 @@ class PhotoSubmissionController extends Controller
      */
     public function index()
     {
-        //
+        $photos = Photo::with('user')->get();
+
+        return view('photo-submission.index', compact('photos'));
     }
 
     /**
@@ -34,7 +43,53 @@ class PhotoSubmissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'      => 'string|required|max:192',
+            'email'     => 'email|required|max:192',
+            'title'     => 'string|required|max:192',
+            'photo'     => 'image|required',
+            'url'       => 'active_url|nullable|max:192',
+            'location'  => 'string|nullable|max:192',
+            'featuring' => 'string|nullable|max:192',
+        ]);
+
+        // Determine user
+        $user = Auth::user();
+        if (! isset($user)) {
+            $request->validate([
+                'email' => 'unique:users',
+            ]);
+
+            $email = $request->input('email');
+            $password = Str::random(64);
+
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $email,
+                'password' => bcrypt($password),
+            ]);
+
+            Auth::attempt([
+                'email' => $email,
+                'password' => $password,
+            ]);
+        }
+
+        // save file
+        $path = $request->photo->store('photos');
+
+        $photo = new Photo([
+            'title' => $request->input('title'),
+            'filepath' => $path,
+            'url' => $request->input('url'),
+            'location' => $request->input('location'),
+            'featuring' => $request->input('featuring'),
+            'comment' => $request->input('comment'),
+        ]);
+
+        $user->photos()->save($photo);
+
+        return redirect('photo-submissions')->with('status', 'Submission recieved!');
     }
 
     /**
@@ -79,6 +134,13 @@ class PhotoSubmissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $photo = Photo::find($id);
+
+        if (Auth::id() === $photo->user->id) {
+            Storage::delete($photo->filepath);
+            $photo->delete();
+        }
+
+        return redirect('photo-submissions')->with('status', 'Submission deleted!');
     }
 }

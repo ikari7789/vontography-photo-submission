@@ -50,7 +50,7 @@ class PhotoController extends Controller
         $filepath = $photo->filepath;
 
         if (! Storage::disk('local')->exists($filepath)) {
-            Storage::disk('local')->put($filepath, Storage::disk('cloud')->get($filepath));
+            Storage::disk('local')->put($filepath, Storage::disk('s3')->get($filepath));
         }
 
         return response()->file(Storage::disk('local')->path($filepath));

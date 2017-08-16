@@ -45,6 +45,11 @@ return [
             'connection' => 'default',
         ],
 
+        'heroku' => [
+            'driver' => 'redis',
+            'connection' => 'heroku',
+        ],
+
         'log' => [
             'driver' => 'log',
         ],

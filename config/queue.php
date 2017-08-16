@@ -64,6 +64,13 @@ return [
             'retry_after' => 90,
         ],
 
+        'heroku' => [
+            'drive' => 'redis',
+            'connection' => 'heroku',
+            'queue' => 'default',
+            'retry_after' => 90,
+        ],
+
     ],
 
     /*

@@ -73,6 +73,11 @@ return [
             'connection' => 'default',
         ],
 
+        'heroku' => [
+            'driver' => 'redis',
+            'connection' => 'heroku',
+        ],
+
     ],
 
     /*

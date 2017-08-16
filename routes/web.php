@@ -12,13 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('photo-submissions');
 });
 
 Auth::routes();
 
-Route::resource('photos', 'PhotoController');
-Route::resource('photo-submissions', 'PhotoSubmissionController');
-Route::get('users', function() {
-    return App\User::all();
-});
+Route::resource('photos', 'PhotoController', ['only' => [
+    'show',
+]]);
+
+Route::resource('photo-submissions', 'PhotoSubmissionController', ['only' => [
+    'index',
+    'create',
+    'store',
+    'destroy',
+]);

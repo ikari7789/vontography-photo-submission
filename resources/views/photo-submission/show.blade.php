@@ -12,7 +12,7 @@
             <div class="card">
                 <h4 class="card-header">{{ $photo->title }}</h4>
                 <div class="card-body">
-                    <img class="img-fluid mx-auto d-block" src="{{ route('photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}" />
+                    <img class="img-fluid mx-auto d-block mb-3 border border-dark" src="{{ route('photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}" />
                     <dl class="row">
                         <dt class="col-sm-3">Uploader</dt>
                         <dd class="col-sm-9">{{ $photo->user->name }}</dd>

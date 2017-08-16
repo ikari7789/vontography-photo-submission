@@ -49,11 +49,11 @@ class PhotoController extends Controller
     {
         $filepath = $photo->filepath;
 
-        if (! Storage::driver('local')->exists($filepath)) {
-            Storage::driver('local')->put($filepath, Storage::driver('s3')->get($filepath));
+        if (! Storage::disk('local')->exists($filepath)) {
+            Storage::disk('local')->put($filepath, Storage::disk('cloud')->get($filepath));
         }
 
-        return response()->file(Storage::driver('local')->path($filepath));
+        return response()->file(Storage::disk('local')->path($filepath));
     }
 
     /**

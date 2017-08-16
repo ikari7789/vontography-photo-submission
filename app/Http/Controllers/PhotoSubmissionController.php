@@ -137,9 +137,15 @@ class PhotoSubmissionController extends Controller
     public function destroy($id)
     {
         $photo = Photo::find($id);
+        $filepath = $photo->filepath;
 
-        if (Auth::id() === $photo->user->id) {
-            Storage::delete($photo->filepath);
+        if ($photo->user->id === Auth::id()) {
+            Storage::disk('s3')->delete($filepath);
+
+            if (Storage::disk('local')->exists($filepath)) {
+                Storage::disk('local')->delete($filepath);
+            }
+
             $photo->delete();
         }
 

@@ -4,6 +4,10 @@
 <div class="container">
     <div class="row mt-3 mb-3 justify-content-md-center">
         <div class="col-md-10 offset-md-2">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active">Home</li>
+            </ol>
+
             <a class="btn btn-primary btn-lg btn-block mb-3" href="{{ route('photo-submissions.create') }}">Add a new submission</a>
 
             @if (session('status'))

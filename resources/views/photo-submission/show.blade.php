@@ -4,6 +4,11 @@
 <div class="container">
     <div class="row mt-3 mb-3 justify-content-md-center">
         <div class="col-md-10 offset-md-2">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ route('photo-submissions.index') }}">Home</a></li>
+              <li class="breadcrumb-item active">Photo Details</li>
+            </ol>
+
             <div class="card">
                 <h4 class="card-header">{{ $photo->title }}</h4>
                 <div class="card-body">

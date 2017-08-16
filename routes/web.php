@@ -26,4 +26,4 @@ Route::resource('photo-submissions', 'PhotoSubmissionController', ['only' => [
     'create',
     'store',
     'destroy',
-]);
+]]);

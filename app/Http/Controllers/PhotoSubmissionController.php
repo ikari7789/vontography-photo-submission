@@ -100,7 +100,9 @@ class PhotoSubmissionController extends Controller
      */
     public function show($id)
     {
-        //
+        $photo = Photo::find($id);
+
+        return view('photo-submission.show', compact('photo'));
     }
 
     /**

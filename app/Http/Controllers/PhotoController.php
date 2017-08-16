@@ -47,7 +47,13 @@ class PhotoController extends Controller
      */
     public function show(Photo $photo)
     {
-        return response()->file(Storage::path($photo->filepath));
+        $filepath = $photo->filepath;
+
+        if (! Storage::driver('local')->exists($filepath)) {
+            Storage::driver('local')->put($filepath, Storage::driver('s3')->get($filepath));
+        }
+
+        return response()->file(Storage::driver('local')->path($filepath));
     }
 
     /**

@@ -47,7 +47,7 @@ class PhotoSubmissionController extends Controller
             'name'      => 'string|required|max:192',
             'email'     => 'email|required|max:192',
             'title'     => 'string|required|max:192',
-            'photo'     => 'image|required',
+            'photo'     => 'image|required|dimensions:min_width=1920,min_height=1080',
             'url'       => 'active_url|nullable|max:192',
             'location'  => 'string|nullable|max:192',
             'featuring' => 'string|nullable|max:192',

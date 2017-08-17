@@ -4,10 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use InvalidArgumentException;
 
 class PhotoController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('can:view,photo')->only('show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +27,15 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $photos = [];
+
+        // TODO: If admin, return all photos, else return only user's photos
+        if ($user) {
+            $photos = $user->photos;
+        }
+
+        return view('photos.index', compact('photos'));
     }
 
     /**
@@ -25,7 +45,7 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        //
+        return view('photos.create');
     }
 
     /**
@@ -36,7 +56,67 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'string|required|max:192',
+            'photo' => 'image|required|max:102400|dimensions:min_width=1920,min_height=1080',
+            'featuring' => 'string|nullable',
+            'comment' => 'string|nullable',
+        ]);
+
+        // Determine user
+        $user = $this->getUser($request);
+
+        // Save file
+        $path = $request->photo->store('photos');
+
+        $photo = new Photo([
+            'title' => $request->input('title'),
+            'filepath' => $path,
+            'url' => $request->input('url'),
+            'location' => $request->input('location'),
+            'featuring' => $request->input('featuring'),
+            'comment' => $request->input('comment'),
+        ]);
+
+        $user->photos()->save($photo);
+
+        return redirect()->route('photos.index')
+            ->with('status', 'Photo successfully uploaded!');
+    }
+
+    /**
+     * Return currently authenticated user or attempt to create
+     * and authenticate one given a request object.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\User
+     */
+    protected function getUser(Request $request)
+    {
+        $user = Auth::user();
+
+        if (! isset($user)) {
+            $request->validate([
+                'name' => 'string|required|max:192',
+                'email' => 'email|required|unique:users|max:192',
+            ]);
+
+            $email = $request->input('email');
+            $password = Str::random(64);
+
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $email,
+                'password' => bcrypt($password),
+            ]);
+
+            Auth::attempt([
+                'email' => $email,
+                'password' => $password,
+            ]);
+        }
+
+        return $user;
     }
 
     /**
@@ -47,13 +127,7 @@ class PhotoController extends Controller
      */
     public function show(Photo $photo)
     {
-        $filepath = $photo->filepath;
-
-        if (! Storage::disk('local')->exists($filepath)) {
-            Storage::disk('local')->put($filepath, Storage::disk('s3')->get($filepath));
-        }
-
-        return response()->file(Storage::disk('local')->path($filepath));
+        return view('photos.show', compact('photo'));
     }
 
     /**
@@ -87,6 +161,15 @@ class PhotoController extends Controller
      */
     public function destroy(Photo $photo)
     {
-        //
+        $this->authorize('delete', $photo);
+
+        // Delete file from storage
+        Storage::delete($photo->filepath);
+
+        // Delete the record
+        $photo->delete();
+
+        return redirect()->route('photos.index')
+            ->with('status', "Photo [{$photo->title}] deleted!");
     }
 }

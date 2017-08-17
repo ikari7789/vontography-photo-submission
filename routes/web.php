@@ -11,20 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('photo-submissions');
-});
-
 Auth::routes();
 
-Route::resource('photos', 'PhotoController', ['only' => [
-    'show',
+Route::get('/', 'PhotoController@index')->name('photos.index');
+Route::resource('photos', 'PhotoController', ['except' => [
+    'index',
 ]]);
 
-Route::resource('photo-submissions', 'PhotoSubmissionController', ['only' => [
-    'index',
-    'create',
-    'store',
-    'show',
-    'destroy',
-]]);
+Route::namespace('Uploads')->prefix('uploads')->group(function () {
+    Route::get('photos/{photo}', 'PhotoController@show')->name('uploads.photos.show');
+});

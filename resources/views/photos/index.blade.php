@@ -8,7 +8,7 @@
               <li class="breadcrumb-item active">Home</li>
             </ol>
 
-            <a class="btn btn-primary btn-lg btn-block mb-3" href="{{ route('photo-submissions.create') }}">Add a new submission</a>
+            <a class="btn btn-primary btn-lg btn-block mb-3" href="{{ route('photos.create') }}">Add a new submission</a>
 
             @if (session('status'))
                 <div class="alert alert-success">
@@ -19,16 +19,16 @@
             <div class="card-columns">
             @foreach($photos as $photo)
                 <div class="card">
-                    <img class="card-img-top" src="{{ route('photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}">
+                    <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}">
                     <div class="card-body">
                         <h4 class="card-title">{{ $photo->title }}</h4>
                         <dl class="row">
                             <dt class="col-sm-6">Uploader</dt>
                             <dd class="col-sm-6">{{ $photo->user->name }}</dd>
                         </dl>
-                        <a href="{{ route('photo-submissions.show', ['id' => $photo->id]) }}" class="btn btn-primary" role="button">Details</a>
+                        <a href="{{ route('photos.show', ['id' => $photo->id]) }}" class="btn btn-primary" role="button">Details</a>
                         @if ($photo->user->id === Auth::id())
-                            <a href="{{ route('photo-submissions.destroy', ['id' => $photo->id]) }}"
+                            <a href="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                                class="btn btn-danger"
                                role="button"
                                onclick="event.preventDefault();
@@ -39,7 +39,7 @@
                             <form class="form-inline"
                                   id="delete-photo-{{ $photo->id }}-form"
                                   method="POST"
-                                  action="{{ route('photo-submissions.destroy', ['id' => $photo->id]) }}"
+                                  action="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                             >
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}

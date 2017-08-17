@@ -5,7 +5,7 @@
     <div class="row mt-3 mb-3 justify-content-md-center">
         <div class="col-md-10 offset-md-2">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{ route('photo-submissions.index') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('photos.index') }}">Home</a></li>
               <li class="breadcrumb-item active">Submit Photo</li>
             </ol>
 
@@ -13,20 +13,17 @@
                 <div class="card-header">Photo Submission</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('photo-submissions.store') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('photos.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="row">
+                            @guest
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-control-label">
                                     Name or Social handle
                                 </label>
 
-                                @guest
-                                    <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" placeholder="John Doe" value="{{ $name or old('name') }}" required />
-                                @else
-                                    <input type="text" readonly class="form-control form-control-plaintext" id="name" name="name" value="{{ Auth::user()->name }}" required />
-                                @endguest
+                                <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" placeholder="John Doe" value="{{ $name or old('name') }}" required />
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
@@ -40,11 +37,7 @@
                                     Email
                                 </label>
 
-                                @guest
-                                    <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" placeholder="john.doe@example.com" value="{{ $email or old('email') }}" required />
-                                @else
-                                    <input type="email" readonly class="form-control form-control-plaintext" id="email" name="email" value="{{ Auth::user()->email }}" required />
-                                @endguest
+                                <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" placeholder="john.doe@example.com" value="{{ $email or old('email') }}" required />
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
@@ -52,6 +45,7 @@
                                     </span>
                                 @endif
                             </div>
+                            @endguest
                         </div>
 
                         <div class="form-group">

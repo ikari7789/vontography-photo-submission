@@ -59,7 +59,9 @@
                                 Photo
                             </label>
 
-                            <input type="file" class="form-control{{ $errors->has('photo') ? ' is-invalid' : '' }}" id="photo" name="photo" placeholder="Enter photo" value="{{ $photo or old('photo') }}" required />
+                            <input type="file" class="form-control{{ $errors->has('photo') ? ' is-invalid' : '' }}" id="photo" name="photo" aria-describedby="photo-help" placeholder="Enter photo" value="{{ $photo or old('photo') }}" required />
+
+                            <small id="photo-help" class="form-text text-muted">Minimum resolution: 1920px x 1080px</small>
 
                             @if ($errors->has('photo'))
                                 <span class="invalid-feedback">

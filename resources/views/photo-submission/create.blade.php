@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-control-label">
-                                    Name
+                                    Name or Social handle
                                 </label>
 
                                 @guest
@@ -55,6 +55,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="title" class="form-control-label">
+                                Title
+                            </label>
+
+                            <input type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="Title of the photo" value="{{ $title or old('title') }}" required />
+
+                            @if ($errors->has('title'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
                             <label for="photo" class="form-control-label">
                                 Photo
                             </label>
@@ -70,69 +84,23 @@
                             @endif
                         </div>
 
-                        <div class="row">
-                            <div class="form-group col-md-6 mb-3">
-                                <label for="title" class="form-control-label">
-                                    Title
-                                </label>
+                        <div class="form-group">
+                            <label for="featuring" class="form-control-label">
+                                Featuring
+                            </label>
 
-                                <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="What do you call this photo?" value="{{ $title or old('title') }}" />
+                            <textarea type="text" class="form-control{{ $errors->has('featuring') ? ' is-invalid' : '' }}" id="featuring" name="featuring" placeholder="Name / Social handle" />{{ $featuring or old('featuring') }}</textarea>
 
-                                @if ($errors->has('title'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('title') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 mb-3">
-                                <label for="url" class="form-control-label">
-                                    URL
-                                </label>
-
-                                <input type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" id="url" name="url" placeholder="What's your site?" value="{{ $url or old('url') }}" />
-
-                                @if ($errors->has('url'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('url') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-md-6 mb-3">
-                                <label for="featuring" class="form-control-label">
-                                    Featuring
-                                </label>
-
-                                <input type="text" class="form-control{{ $errors->has('featuring') ? ' is-invalid' : '' }}" id="featuring" name="featuring" placeholder="Who appears in the photo?" value="{{ $featuring or old('featuring') }}" />
-
-                                @if ($errors->has('featuring'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('featuring') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-md-6 mb-3">
-                                <label for="location" class="form-control-label">
-                                    Location
-                                </label>
-
-                                <input type="text" class="form-control{{ $errors->has('location') ? ' is-invalid' : '' }}" id="location" name="location" placeholder="Where was the photo taken?" value="{{ $location or old('location') }}" />
-
-                                @if ($errors->has('location'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('location') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                            @if ($errors->has('featuring'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('featuring') }}</strong>
+                                </span>
+                            @endif
                         </div>
 
                         <div class="form-group">
                             <label for="comment" class="form-control-label">
-                                Comment
+                                Comments
                             </label>
 
                             <textarea class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}" id="comment" name="comment" placeholder="Anything you'd like to add?" />{{ $comment or old('comment') }}</textarea>

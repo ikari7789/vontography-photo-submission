@@ -16,20 +16,12 @@
                     <dl class="row">
                         <dt class="col-sm-3">Uploader</dt>
                         <dd class="col-sm-9">{{ $photo->user->name }}</dd>
-                        @if (isset($photo->url))
-                            <dt class="col-sm-3">URL</dt>
-                            <dd class="col-sm-9"><a href="{{ $photo->url }}">{{ $photo->url }}</a></dd>
-                        @endif
-                        @if (isset($photo->location))
-                            <dt class="col-sm-3">Location</dt>
-                            <dd class="col-sm-9">{{ $photo->location }}</dd>
-                        @endif
                         @if (isset($photo->featuring))
                             <dt class="col-sm-3">Featuring</dt>
                             <dd class="col-sm-9">{{ $photo->featuring }}</dd>
                         @endif
                         @if (isset($photo->comment))
-                            <dt class="col-sm-3">Comment</dt>
+                            <dt class="col-sm-3">Comments</dt>
                             <dd class="col-sm-9">{{ $photo->comment }}</dd>
                         @endif
                     </dl>

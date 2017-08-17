@@ -33,7 +33,7 @@
                             </dd>
                         @endif
                     </dl>
-                    @if ($photo->user->id === Auth::id())
+                    @can('delete', $photo)
                         <a href="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                            class="btn btn-danger"
                            role="button"
@@ -50,7 +50,7 @@
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                         </form>
-                    @endif
+                    @endcan
                 </div>
             </div>
         </div>

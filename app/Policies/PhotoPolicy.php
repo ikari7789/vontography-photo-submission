@@ -12,7 +12,7 @@ class PhotoPolicy
 
     public function before($user, $ability)
     {
-        if ($user->isAdmin) {
+        if ($user->is_admin) {
             return true;
         }
     }

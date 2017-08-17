@@ -8,13 +8,13 @@
               <li class="breadcrumb-item active">Home</li>
             </ol>
 
-            <a class="btn btn-primary btn-lg btn-block mb-3" href="{{ route('photos.create') }}">Add a new submission</a>
-
             @if (session('status'))
                 <div class="alert alert-success">
                     {{ session('status') }}
                 </div>
             @endif
+
+            <a class="btn btn-primary btn-lg btn-block mb-3" href="{{ route('photos.create') }}">Add a new submission</a>
 
             <div class="card-columns">
             @foreach($photos as $photo)
@@ -27,7 +27,7 @@
                             <dd class="col-sm-6">{{ $photo->user->name }}</dd>
                         </dl>
                         <a href="{{ route('photos.show', ['id' => $photo->id]) }}" class="btn btn-primary" role="button">Details</a>
-                        @if ($photo->user->id === Auth::id())
+                        @can('delete', $photo)
                             <a href="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                                class="btn btn-danger"
                                role="button"
@@ -44,7 +44,7 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
                             </form>
-                        @endif
+                        @endcan
                     </div>
                 </div>
             @endforeach

@@ -30,9 +30,12 @@ class PhotoController extends Controller
         $user = Auth::user();
         $photos = [];
 
-        // TODO: If admin, return all photos, else return only user's photos
         if ($user) {
-            $photos = $user->photos;
+            if ($user->is_admin) {
+                $photos = Photo::all();
+            } else {
+                $photos = $user->photos;
+            }
         }
 
         return view('photos.index', compact('photos'));

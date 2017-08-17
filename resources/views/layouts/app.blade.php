@@ -46,6 +46,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="app-navbar-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ Auth::user()->name }}
+                                @if (Auth::user()->is_admin)
+                                    [admin]
+                                @endif
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="app-navbar-user-dropdown">

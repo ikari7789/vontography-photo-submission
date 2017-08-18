@@ -20,7 +20,7 @@
                         <p class="alert alert-info">
                             Name / Email are used for managing your uploads. If you haven't already registered,
                             an account will be generated automatically for you. Since no one should know your
-                            password but you, after your initial submission, please request to <a href="{{ route('password.request', true) }}">reset your password</a>.
+                            password but you, after your initial submission, please request to <a href="{{ route('password.request') }}">reset your password</a>.
                         </p>
                         <div class="row">
                             <div class="form-group col-md-6 mb-3">

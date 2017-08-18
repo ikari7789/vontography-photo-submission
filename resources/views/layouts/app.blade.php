@@ -37,10 +37,10 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login', true) }}">Login</a>
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register', true) }}">Register</a>
+                            <a class="nav-link" href="{{ route('register') }}">Register</a>
                         </li>
                     @else
                         <li class="nav-item dropdown">
@@ -52,13 +52,13 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="app-navbar-user-dropdown">
-                                <a class="dropdown-item" href="{{ route('logout', true) }}"
+                                <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
 
-                                <form class="form-inline" id="logout-form" action="{{ route('logout', true) }}" method="POST">
+                                <form class="form-inline" id="logout-form" action="{{ route('logout') }}" method="POST">
                                     {{ csrf_field() }}
                                 </form>
                             </div>

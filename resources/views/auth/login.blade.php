@@ -8,7 +8,7 @@
                 <div class="card-header">Login</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login', true) }}">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -55,7 +55,7 @@
                                     Login
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link" href="{{ route('password.request', true) }}">
                                     Forgot Your Password?
                                 </a>
                             </div>

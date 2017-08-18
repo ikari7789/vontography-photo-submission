@@ -16,8 +16,13 @@
                     <form method="post" action="{{ route('photos.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
+                        @guest
+                        <p class="alert alert-info">
+                            Name / Email are used for managing your uploads. If you haven't already registered,
+                            an account will be generated automatically for you. Since no one should know your
+                            password but you, after your initial submission, please request to <a href="{{ route('password.request') }}">reset your password</a>.
+                        </p>
                         <div class="row">
-                            @guest
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-control-label">
                                     Name or Social Handle<span class="text-danger">*</span>
@@ -45,8 +50,8 @@
                                     </span>
                                 @endif
                             </div>
-                            @endguest
                         </div>
+                        @endguest
 
                         <div class="form-group">
                             <label for="title" class="form-control-label">

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Photo;
+use App\User;
+use App\Notifications\PhotoUploaded;
 use App\Rules\CustomDimensions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
 
@@ -92,6 +95,15 @@ class PhotoController extends Controller
         ]);
 
         $user->photos()->save($photo);
+
+        $user->notify(new PhotoUploaded($photo));
+
+        // Notify admins
+        foreach (User::where('is_admin', 1)->get() as $admin) {
+            if ($admin->id !== $user->id) {
+                $admin->notify(new PhotoUploaded($photo));
+            }
+        }
 
         return redirect()->route('photos.index')
             ->with('status', 'Photo successfully uploaded!');

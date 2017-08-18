@@ -20,7 +20,7 @@
                             @guest
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-control-label">
-                                    Name or Social handle<span class="text-danger">*</span>
+                                    Name or Social Handle<span class="text-danger">*</span>
                                 </label>
 
                                 <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" placeholder="John Doe" value="{{ $name or old('name') }}" required />
@@ -50,10 +50,10 @@
 
                         <div class="form-group">
                             <label for="title" class="form-control-label">
-                                Title<span class="text-danger">*</span>
+                                Photography Social Media Name<span class="text-danger">*</span>
                             </label>
 
-                            <input type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="Title of the photo" value="{{ $title or old('title') }}" required />
+                            <input type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="Photography Social Media Name" value="{{ $title or old('title') }}" required />
 
                             @if ($errors->has('title'))
                                 <span class="invalid-feedback">

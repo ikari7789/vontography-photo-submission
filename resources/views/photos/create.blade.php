@@ -20,7 +20,7 @@
                             @guest
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-control-label">
-                                    Name or Social handle
+                                    Name or Social handle<span class="text-danger">*</span>
                                 </label>
 
                                 <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" placeholder="John Doe" value="{{ $name or old('name') }}" required />
@@ -34,7 +34,7 @@
 
                             <div class="form-group col-md-6 mb-3">
                                 <label for="email" class="form-control-label">
-                                    Email
+                                    Email<span class="text-danger">*</span>
                                 </label>
 
                                 <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" placeholder="john.doe@example.com" value="{{ $email or old('email') }}" required />
@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             <label for="title" class="form-control-label">
-                                Title
+                                Title<span class="text-danger">*</span>
                             </label>
 
                             <input type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="Title of the photo" value="{{ $title or old('title') }}" required />
@@ -64,7 +64,7 @@
 
                         <div class="form-group">
                             <label for="photo" class="form-control-label">
-                                Photo
+                                Photo<span class="text-danger">*</span>
                             </label>
 
                             <input type="file" class="form-control{{ $errors->has('photo') ? ' is-invalid' : '' }}" id="photo" name="photo" aria-describedby="photo-help" placeholder="Enter photo" value="{{ $photo or old('photo') }}" required />
@@ -83,7 +83,7 @@
                                 Featuring
                             </label>
 
-                            <textarea type="text" class="form-control{{ $errors->has('featuring') ? ' is-invalid' : '' }}" id="featuring" name="featuring" placeholder="Name / Social handle" />{{ $featuring or old('featuring') }}</textarea>
+                            <textarea type="text" class="form-control{{ $errors->has('featuring') ? ' is-invalid' : '' }}" id="featuring" name="featuring" placeholder="Name / Social handle of cosplayer(s)" />{{ $featuring or old('featuring') }}</textarea>
 
                             @if ($errors->has('featuring'))
                                 <span class="invalid-feedback">

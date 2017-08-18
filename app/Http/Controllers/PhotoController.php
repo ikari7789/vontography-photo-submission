@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Photo;
+use App\Rules\CustomDimensions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -61,7 +62,16 @@ class PhotoController extends Controller
     {
         $request->validate([
             'title' => 'string|required|max:192',
-            'photo' => 'image|required|max:102400|dimensions:min_width=1920,min_height=1080',
+            'photo' => [
+                'image',
+                'required',
+                'max:102400',
+                new CustomDimensions([
+                    'min_width' => 1920,
+                    'min_height' => 1080,
+                    'orientation_agnostic' => true,
+                ]),
+            ],
             'featuring' => 'string|nullable',
             'comment' => 'string|nullable',
         ]);

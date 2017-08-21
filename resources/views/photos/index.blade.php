@@ -21,10 +21,11 @@
                 <div class="card">
                     <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}">
                     <div class="card-body">
-                        <h4 class="card-title">{{ $photo->title }}</h4>
                         <dl class="row">
                             <dt class="col-sm-6">Uploader</dt>
                             <dd class="col-sm-6">{{ $photo->user->name }}</dd>
+                            <dt class="col-sm-6">Social handle</dt>
+                            <dd class="col-sm-6">{{ '@'.$photo->title }}</dd>
                         </dl>
                         <a href="{{ route('photos.show', ['id' => $photo->id]) }}" class="btn btn-primary" role="button">Details</a>
                         @can('delete', $photo)

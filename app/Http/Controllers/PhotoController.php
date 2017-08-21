@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class PhotoController extends Controller
@@ -68,7 +69,7 @@ class PhotoController extends Controller
             'photo' => [
                 'image',
                 'required',
-                'max:102400',
+                'max:52428800',
                 new CustomDimensions([
                     'min_width' => 1920,
                     'min_height' => 1080,

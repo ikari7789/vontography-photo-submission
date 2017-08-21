@@ -10,12 +10,13 @@
             </ol>
 
             <div class="card">
-                <h4 class="card-header">{{ $photo->title }}</h4>
                 <div class="card-body">
                     <img class="img-fluid mx-auto d-block mb-3 border border-dark" src="{{ route('uploads.photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}" />
                     <dl class="row">
                         <dt class="col-sm-3">Uploader</dt>
                         <dd class="col-sm-9">{{ $photo->user->name }}</dd>
+                        <dt class="col-sm-3">Social handle</dt>
+                        <dd class="col-sm-9">{{ '@'.$photo->title }}</dd>
                         @if (isset($photo->featuring))
                             <dt class="col-sm-3">Featuring</dt>
                             <dd class="col-sm-9">

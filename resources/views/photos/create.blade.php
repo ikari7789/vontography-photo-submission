@@ -55,7 +55,14 @@
 
                         <div class="form-group">
                             <label for="title" class="form-control-label">
-                                 Photo Title or Photography Social Media Name<span class="text-danger">*</span>
+                                 Photography 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 Media Name<span class="text-danger">*</span>
                             </label>
 
                             <input type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="Photography Social Media Name" value="{{ $title or old('title') }}" required />

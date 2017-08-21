@@ -69,7 +69,7 @@ class PhotoController extends Controller
             'photo' => [
                 'image',
                 'required',
-                'max:102400',
+                'max:52428800',
                 new CustomDimensions([
                     'min_width' => 1920,
                     'min_height' => 1080,

@@ -54,6 +54,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (config('app.debug')) {
+            return parent::render($request, $exception);
+        }
+
         return response()->view('errors.500', [
             'sentryId' => $this->sentryId
         ], 500);

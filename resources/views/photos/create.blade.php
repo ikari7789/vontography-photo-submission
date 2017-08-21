@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-control-label">
-                                    Name or Social Handle<span class="text-danger">*</span>
+                                    Name<span class="text-danger">*</span>
                                 </label>
 
                                 <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" placeholder="John Doe" value="{{ $name or old('name') }}" required />
@@ -55,7 +55,7 @@
 
                         <div class="form-group">
                             <label for="title" class="form-control-label">
-                                 Photo Title or Photography Social Media Name<span class="text-danger">*</span>
+                                 Photography Social Media Name<span class="text-danger">*</span>
                             </label>
 
                             <input type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="Photography Social Media Name" value="{{ $title or old('title') }}" required />
@@ -74,7 +74,7 @@
 
                             <input type="file" class="form-control{{ $errors->has('photo') ? ' is-invalid' : '' }}" id="photo" name="photo" aria-describedby="photo-help" placeholder="Enter photo" value="{{ $photo or old('photo') }}" required />
 
-                            <small id="photo-help" class="form-text text-muted">Minimum resolution: 1920px x 1080px</small>
+                            <small id="photo-help" class="form-text text-muted">Minimum resolution: 1920px x 1080px (or 1080px x 1920px)</small>
 
                             @if ($errors->has('photo'))
                                 <span class="invalid-feedback">

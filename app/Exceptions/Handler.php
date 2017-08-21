@@ -26,6 +26,8 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
+    private $sentryId;
+
     /**
      * Report or log an exception.
      *
@@ -36,6 +38,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if ($this->shouldReport($exception)) {
+            // bind the event ID for Feedback
+            $this->sentryId = app('sentry')->captureException($exception);
+        }
         parent::report($exception);
     }
 
@@ -48,6 +54,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        return response()->view('errors.500', [
+            'sentryId' => $this->sentryId
+        ], 500);
     }
 }

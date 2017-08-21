@@ -11,8 +11,10 @@
 
             <div class="card">
                 <div class="card-body">
-                    <img class="img-fluid mx-auto d-block mb-3 border border-dark" src="{{ route('uploads.photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}" />
-                    <dl class="row">
+                    <a href="{{ route('uploads.photos.show', ['id' => $photo->id, 'original' => 1]) }}">
+                        <img class="img-thumbnail img-fluid mx-auto d-block" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->title }}" />
+                    </a>
+                    <dl class="row mt-3">
                         <dt class="col-sm-3">Uploader</dt>
                         <dd class="col-sm-9">{{ $photo->user->name }}</dd>
                         <dt class="col-sm-3">Social handle</dt>

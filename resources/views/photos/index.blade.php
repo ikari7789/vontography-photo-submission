@@ -19,7 +19,7 @@
             <div class="card-columns">
             @foreach($photos as $photo)
                 <div class="card">
-                    <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id]) }}" alt="{{ $photo->title }}">
+                    <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->title }}">
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-sm-6">Uploader</dt>

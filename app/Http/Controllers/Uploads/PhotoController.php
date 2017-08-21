@@ -18,9 +18,26 @@ class PhotoController extends Controller
      * @param  \App\Photo  $photo
      * @return \Illuminate\Http\Response
      */
-    public function show(Photo $photo)
+    public function show(Request $request, Photo $photo)
     {
         $this->authorize('view', $photo);
+
+        $request->validate([
+            'original' => 'boolean|nullable',
+            'quality' => 'integer|nullable|min:0|max:100',
+            'height' => 'integer|nullable',
+            'width' => 'integer|nullable',
+        ]);
+
+        $original = $request->input('original') ?? false;
+        $quality = $request->input('quality');
+        $height = $request->input('height');
+        $width = $request->input('width');
+
+        // Return the original image if $original is set
+        if ($original) {
+            return response()->file(Storage::path($photo->filepath));
+        }
 
         $key = "photos_{$photo->id}";
 
@@ -28,6 +45,15 @@ class PhotoController extends Controller
             return Storage::get($photo->filepath);
         });
 
-        return Image::make($imageData)->response();
+        $image = Image::make($imageData);
+
+        if ($width !== null || $height !== null) {
+            $image->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+        }
+
+        return $image->response('jpeg', $quality);
     }
 }

@@ -19,7 +19,9 @@
             <div class="card-columns">
             @foreach($photos as $photo)
                 <div class="card">
-                    <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->title }}">
+                    <a href="{{ route('photos.show', ['id' => $photo->id]) }}">
+                        <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->title }}">
+                    </a>
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-sm-6">Uploader</dt>
@@ -27,7 +29,9 @@
                             <dt class="col-sm-6">Social handle</dt>
                             <dd class="col-sm-6">{{ '@'.$photo->title }}</dd>
                         </dl>
-                        <a href="{{ route('photos.show', ['id' => $photo->id]) }}" class="btn btn-primary" role="button">Details</a>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a class="btn btn-primary" role="button" href="{{ route('photos.show', ['id' => $photo->id]) }}">Details</a>
                         @can('delete', $photo)
                             <a href="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                                class="btn btn-danger"

@@ -36,6 +36,8 @@
                             </dd>
                         @endif
                     </dl>
+                </div>
+                <div class="card-footer text-right">
                     @can('delete', $photo)
                         <a href="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                            class="btn btn-danger"

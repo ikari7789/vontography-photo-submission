@@ -37,9 +37,9 @@ class PhotoController extends Controller
 
         if ($user) {
             if ($user->is_admin) {
-                $photos = Photo::all();
+                $photos = Photo::orderBy('created_at', 'desc')->get();
             } else {
-                $photos = $user->photos;
+                $photos = $user->photos()->orderBy('created_at', 'desc')->get();
             }
         }
 

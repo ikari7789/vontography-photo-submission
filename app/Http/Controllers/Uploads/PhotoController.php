@@ -39,21 +39,27 @@ class PhotoController extends Controller
             return response()->file(Storage::path($photo->filepath));
         }
 
-        $key = "photos_{$photo->id}";
+        $key = sprintf(
+            "photos_%d_%d_%d_%d",
+            $photo->id,
+            $width ?? 0,
+            $height ?? 0,
+            $quality ?? 90
+        );
 
-        $imageData = Cache::remember($key, 30, function() use ($photo) {
-            return Storage::get($photo->filepath);
+        $response = Cache::remember($key, 30, function() use ($photo, $width, $height, $quality) {
+            $image = Image::make(Storage::get($photo->filepath));
+
+            if ($width !== null || $height !== null) {
+                $image->resize($width, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+            }
+
+            return $image->response('jpeg', $quality);
         });
 
-        $image = Image::make($imageData);
-
-        if ($width !== null || $height !== null) {
-            $image->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-        }
-
-        return $image->response('jpeg', $quality);
+        return $response;
     }
 }

@@ -29,7 +29,7 @@ class PhotoController extends Controller
             'width' => 'integer|nullable',
         ]);
 
-        $original = $request->input('original') === 1 ? true : false;
+        $original = $request->input('original');
         $quality = $request->input('quality');
         $height = $request->input('height');
         $width = $request->input('width');

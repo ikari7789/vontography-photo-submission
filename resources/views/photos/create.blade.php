@@ -2,33 +2,31 @@
 
 @section('content')
 <div class="container">
-    <div class="row mt-3 mb-3 justify-content-md-center">
-        <div class="col-md-10 offset-md-2">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{ route('photos.index') }}">Home</a></li>
-              <li class="breadcrumb-item active">Submit Photo</li>
+              <li class="breadcrumb-item"><a href="{{ route('photos.index') }}">{{ __('photos.pages.index.title') }}</a></li>
+              <li class="breadcrumb-item active">{{ __('photos.pages.create.title') }}</li>
             </ol>
 
             <div class="card">
-                <div class="card-header">Photo Submission</div>
+                <div class="card-header">{{ __('photos.pages.create.form_title') }}</div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ route('photos.store') }}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
+                    <form method="POST" action="{{ route('photos.store') }}" enctype="multipart/form-data">
+                        @csrf
 
                         @guest
                         <p class="alert alert-info">
-                            Name / Email are used for managing your uploads. If you haven't already registered,
-                            an account will be generated automatically for you. Since no one should know your
-                            password but you, after your initial submission, please request to <a href="{{ route('password.request') }}">reset your password</a>.
+                            {!! __('photos.pages.create.alert', ['request_url' => route('password.request')]) !!}
                         </p>
-                        <div class="row">
+                        <div class="form-group row">
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-control-label">
-                                    Name<span class="text-danger">*</span>
+                                    {{ __('photos.attributes.name.text') }}<span class="text-danger">*</span>
                                 </label>
 
-                                <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" placeholder="John Doe" value="{{ $name or old('name') }}" required />
+                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" placeholder="{{ __('photos.attributes.name.placeholder') }}" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
@@ -39,10 +37,10 @@
 
                             <div class="form-group col-md-6 mb-3">
                                 <label for="email" class="form-control-label">
-                                    Email<span class="text-danger">*</span>
+                                    {{ __('photos.attributes.email.text') }}<span class="text-danger">*</span>
                                 </label>
 
-                                <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" placeholder="john.doe@example.com" value="{{ $email or old('email') }}" required />
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="{{ __('photos.attributes.email.placeholder') }}" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
@@ -55,10 +53,10 @@
 
                         <div class="form-group">
                             <label for="title" class="form-control-label">
-                                 Photography Social Media Name<span class="text-danger">*</span>
+                                 {{ __('photos.attributes.title.text') }}<span class="text-danger">*</span>
                             </label>
 
-                            <input type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" placeholder="Photography Social Media Name" value="{{ $title or old('title') }}" required />
+                            <input  id="title" type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" placeholder="{{ __('photos.attributes.title.placeholder') }}" value="{{ old('title') }}" required>
 
                             @if ($errors->has('title'))
                                 <span class="invalid-feedback">
@@ -69,12 +67,12 @@
 
                         <div class="form-group">
                             <label for="photo" class="form-control-label">
-                                Photo<span class="text-danger">*</span>
+                                {{ __('photos.attributes.photo.text') }}<span class="text-danger">*</span>
                             </label>
 
-                            <input type="file" class="form-control{{ $errors->has('photo') ? ' is-invalid' : '' }}" id="photo" name="photo" aria-describedby="photo-help" placeholder="Enter photo" value="{{ $photo or old('photo') }}" required />
+                            <input id="photo" type="file" class="form-control{{ $errors->has('photo') ? ' is-invalid' : '' }}" name="photo" aria-describedby="photo-help" placeholder="{{ __('photos.attributes.photo.text') }}" value="{{ old('photo') }}" required>
 
-                            <small id="photo-help" class="form-text text-muted">Minimum resolution: 1920px x 1080px (or 1080px x 1920px)</small>
+                            <small id="photo-help" class="form-text text-muted">{{ __('photos.attributes.photo.description') }}</small>
 
                             @if ($errors->has('photo'))
                                 <span class="invalid-feedback">
@@ -85,10 +83,10 @@
 
                         <div class="form-group">
                             <label for="featuring" class="form-control-label">
-                                Featuring
+                                {{ __('photos.attributes.featuring.text') }}
                             </label>
 
-                            <textarea type="text" class="form-control{{ $errors->has('featuring') ? ' is-invalid' : '' }}" id="featuring" name="featuring" placeholder="Name / Social handle of cosplayer(s)" />{{ $featuring or old('featuring') }}</textarea>
+                            <textarea id="featuring" type="text" class="form-control{{ $errors->has('featuring') ? ' is-invalid' : '' }}" name="featuring" placeholder="{{ __('photos.attributes.featuring.placeholder') }}" />{{ old('featuring') }}</textarea>
 
                             @if ($errors->has('featuring'))
                                 <span class="invalid-feedback">
@@ -99,10 +97,10 @@
 
                         <div class="form-group">
                             <label for="comment" class="form-control-label">
-                                Comments
+                                {{ __('photos.attributes.comment.text') }}
                             </label>
 
-                            <textarea class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}" id="comment" name="comment" placeholder="Anything you'd like to add?" />{{ $comment or old('comment') }}</textarea>
+                            <textarea id="comment" class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}" name="comment" placeholder="{{ __('photos.attributes.comment.placeholder') }}" />{{ $comment or old('comment') }}</textarea>
 
                             @if ($errors->has('comment'))
                                 <span class="invalid-feedback">
@@ -112,7 +110,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            Submit Photo
+                            {{ __('photos.pages.create.submit') }}
                         </button>
                     </form>
                 </div>

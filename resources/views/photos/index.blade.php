@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="container">
-    <div class="row mt-3 mb-3 justify-content-md-center">
-        <div class="col-md-10 offset-md-2">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active">Home</li>
+              <li class="breadcrumb-item active">{{ __('photos.pages.index.title') }}</li>
             </ol>
 
             @if (session('status'))
@@ -14,7 +14,7 @@
                 </div>
             @endif
 
-            <a class="btn btn-primary btn-lg btn-block mb-3" href="{{ route('photos.create') }}">Add a new submission</a>
+            <a class="btn btn-primary btn-lg btn-block mb-3" href="{{ route('photos.create') }}">{{ __('photos.pages.index.create_action') }}</a>
 
             <div class="card-columns">
             @foreach($photos as $photo)
@@ -24,14 +24,14 @@
                     </a>
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-6">Uploader</dt>
+                            <dt class="col-sm-6">{{ __('photos.attributes.uploader.text') }}</dt>
                             <dd class="col-sm-6">{{ $photo->user->name }}</dd>
-                            <dt class="col-sm-6">Social handle</dt>
+                            <dt class="col-sm-6">{{ __('photos.attributes.title.text') }}</dt>
                             <dd class="col-sm-6">{{ '@'.$photo->title }}</dd>
                         </dl>
                     </div>
                     <div class="card-footer text-right">
-                        <a class="btn btn-primary" role="button" href="{{ route('photos.show', ['id' => $photo->id]) }}">Details</a>
+                        <a class="btn btn-primary" role="button" href="{{ route('photos.show', ['id' => $photo->id]) }}">{{ __('photos.pages.index.details') }}</a>
                         @can('delete', $photo)
                             <a href="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                                class="btn btn-danger"
@@ -39,14 +39,14 @@
                                onclick="event.preventDefault();
                                         document.getElementById('delete-photo-{{ $photo->id }}-form').submit();"
                             >
-                                Delete
+                                {{ __('photos.pages.index.delete_action') }}
                             </a>
                             <form class="form-inline"
                                   id="delete-photo-{{ $photo->id }}-form"
                                   method="POST"
                                   action="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                             >
-                                {{ csrf_field() }}
+                                @csrf
                                 {{ method_field('DELETE') }}
                             </form>
                         @endcan

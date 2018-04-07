@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container">
-    <div class="row mt-3 mb-3 justify-content-md-center">
-        <div class="col-md-10 offset-md-2">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{ route('photos.index') }}">Home</a></li>
-              <li class="breadcrumb-item active">Photo Details</li>
+              <li class="breadcrumb-item"><a href="{{ route('photos.index') }}">{{ __('photos.pages.index.title') }}</a></li>
+              <li class="breadcrumb-item active">{{ __('photos.pages.show.title') }}</li>
             </ol>
 
             <div class="card">
@@ -15,12 +15,12 @@
                         <img class="img-thumbnail img-fluid mx-auto d-block" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->title }}" />
                     </a>
                     <dl class="row mt-3">
-                        <dt class="col-sm-3">Uploader</dt>
+                        <dt class="col-sm-3">{{ __('photos.attributes.uploader.text') }}</dt>
                         <dd class="col-sm-9">{{ $photo->user->name }}</dd>
-                        <dt class="col-sm-3">Social handle</dt>
+                        <dt class="col-sm-3">{{ __('photos.attributes.title.text') }}</dt>
                         <dd class="col-sm-9">{{ '@'.$photo->title }}</dd>
                         @if (isset($photo->featuring))
-                            <dt class="col-sm-3">Featuring</dt>
+                            <dt class="col-sm-3">{{ __('photos.attributes.featuring.text') }}</dt>
                             <dd class="col-sm-9">
                                 @foreach (explode("\n", $photo->featuring) as $line)
                                     {{ $line }}<br />
@@ -28,7 +28,7 @@
                             </dd>
                         @endif
                         @if (isset($photo->comment))
-                            <dt class="col-sm-3">Comments</dt>
+                            <dt class="col-sm-3">{{ __('photos.attributes.comment.text') }}</dt>
                             <dd class="col-sm-9">
                                 @foreach (explode("\n", $photo->comment) as $line)
                                     {{ $line }}<br />
@@ -45,14 +45,14 @@
                            onclick="event.preventDefault();
                                     document.getElementById('delete-photo-{{ $photo->id }}-form').submit();"
                         >
-                            Delete
+                            {{ __('photos.pages.show.delete_action') }}
                         </a>
                         <form class="form-inline"
                               id="delete-photo-{{ $photo->id }}-form"
                               method="POST"
                               action="{{ route('photos.destroy', ['id' => $photo->id]) }}"
                         >
-                            {{ csrf_field() }}
+                            @csrf
                             {{ method_field('DELETE') }}
                         </form>
                     @endcan

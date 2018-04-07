@@ -41,7 +41,7 @@ return [
         'database' => [
             'driver' => 'database',
             'table' => 'cache',
-            'connection' => env('CACHE_CONNECTION', null),
+            'connection' => null,
         ],
 
         'file' => [
@@ -73,11 +73,6 @@ return [
             'connection' => 'default',
         ],
 
-        'heroku' => [
-            'driver' => 'redis',
-            'connection' => 'heroku',
-        ],
-
     ],
 
     /*
@@ -91,6 +86,9 @@ return [
     |
     */
 
-    'prefix' => 'laravel',
+    'prefix' => env(
+        'CACHE_PREFIX',
+        str_slug(env('APP_NAME', 'laravel'), '_').'_cache'
+    ),
 
 ];

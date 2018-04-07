@@ -26,22 +26,14 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    private $sentryId;
-
     /**
      * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param  \Exception  $exception
      * @return void
      */
     public function report(Exception $exception)
     {
-        if ($this->shouldReport($exception)) {
-            // bind the event ID for Feedback
-            $this->sentryId = app('sentry')->captureException($exception);
-        }
         parent::report($exception);
     }
 
@@ -54,12 +46,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if (config('app.debug')) {
-            return parent::render($request, $exception);
-        }
-
-        return response()->view('errors.500', [
-            'sentryId' => $this->sentryId
-        ], 500);
+        return parent::render($request, $exception);
     }
 }

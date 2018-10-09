@@ -11,9 +11,8 @@
 |
 */
 
-Auth::routes();
-
 Route::get('/', 'PhotoController@index')->name('photos.index');
+
 Route::resource('photos', 'PhotoController', ['except' => [
     'index',
 ]]);
@@ -21,3 +20,5 @@ Route::resource('photos', 'PhotoController', ['except' => [
 Route::namespace('Uploads')->prefix('uploads')->group(function() {
     Route::get('photos/{photo}', 'PhotoController@show')->name('uploads.photos.show');
 });
+
+Auth::routes();

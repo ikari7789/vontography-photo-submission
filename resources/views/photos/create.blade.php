@@ -70,7 +70,7 @@
                                 {{ __('photos.attributes.photo.text') }}<span class="text-danger">*</span>
                             </label>
 
-                            <input id="photo" type="file" class="form-control{{ $errors->has('photo') ? ' is-invalid' : '' }}" name="photo" aria-describedby="photo-help" placeholder="{{ __('photos.attributes.photo.text') }}" value="{{ old('photo') }}" required>
+                            <input id="photo" type="file" class="form-control-file{{ $errors->has('photo') ? ' is-invalid' : '' }}" name="photo" aria-describedby="photo-help" placeholder="{{ __('photos.attributes.photo.text') }}" value="{{ old('photo') }}" required>
 
                             <small id="photo-help" class="form-text text-muted">{{ __('photos.attributes.photo.description') }}</small>
 
@@ -100,7 +100,7 @@
                                 {{ __('photos.attributes.comment.text') }}
                             </label>
 
-                            <textarea id="comment" class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}" name="comment" placeholder="{{ __('photos.attributes.comment.placeholder') }}" />{{ $comment or old('comment') }}</textarea>
+                            <textarea id="comment" class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}" name="comment" placeholder="{{ __('photos.attributes.comment.placeholder') }}" />{{ old('comment') }}</textarea>
 
                             @if ($errors->has('comment'))
                                 <span class="invalid-feedback">

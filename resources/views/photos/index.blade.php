@@ -20,14 +20,14 @@
             @foreach($photos as $photo)
                 <div class="card">
                     <a href="{{ route('photos.show', ['id' => $photo->id]) }}">
-                        <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->title }}">
+                        <img class="card-img-top" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->social_handle }}">
                     </a>
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-sm-6">{{ __('photos.attributes.uploader.text') }}</dt>
                             <dd class="col-sm-6">{{ $photo->user->name }}</dd>
-                            <dt class="col-sm-6">{{ __('photos.attributes.title.text') }}</dt>
-                            <dd class="col-sm-6">{{ '@'.$photo->title }}</dd>
+                            <dt class="col-sm-6">{{ __('photos.attributes.social_handle.text') }}</dt>
+                            <dd class="col-sm-6">{{ '@'.$photo->social_handle }}</dd>
                         </dl>
                     </div>
                     <div class="card-footer text-right">

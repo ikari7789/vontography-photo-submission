@@ -6,6 +6,7 @@ use App\Photo;
 use App\User;
 use App\Notifications\PhotoUploaded;
 use App\Rules\CustomDimensions;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -53,7 +54,35 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        return view('photos.create');
+        $termsAccepted = $this->termsAccepted();
+
+        return view('photos.create', ['terms_accepted' => $termsAccepted]);
+    }
+
+    /**
+     * Determine if terms have been accepted.
+     *
+     * @return bool
+     */
+    protected function termsAccepted()
+    {
+        if (Auth::guest()) {
+            return false;
+        }
+
+        $user = Auth::user();
+
+        if (! isset($user->terms_accepted_at)) {
+            return false;
+        }
+
+        $termsUpdatedAt = Carbon::createFromFormat('Y-m-d H:i:s e', config('legal.terms_updated_at'));
+
+        if ($user->terms_accepted_at->lt($termsUpdatedAt)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -65,7 +94,7 @@ class PhotoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'string|required|max:192',
+            'social_handle' => 'string|required|max:192',
             'photo' => [
                 'image',
                 'required',
@@ -77,6 +106,7 @@ class PhotoController extends Controller
                 ]),
             ],
             'featuring' => 'string|nullable',
+            'camera_metadata' => 'string|nullable',
             'comment' => 'string|nullable',
         ]);
 
@@ -87,11 +117,12 @@ class PhotoController extends Controller
         $path = $request->photo->store('photos');
 
         $photo = new Photo([
-            'title' => $request->input('title'),
+            'social_handle' => $request->input('social_handle'),
             'filepath' => $path,
             'url' => $request->input('url'),
             'location' => $request->input('location'),
             'featuring' => $request->input('featuring'),
+            'camera_metadata' => $request->input('camera_metadata'),
             'comment' => $request->input('comment'),
         ]);
 
@@ -121,26 +152,47 @@ class PhotoController extends Controller
     {
         $user = Auth::user();
 
-        if (! isset($user)) {
-            $request->validate([
-                'name' => 'string|required|max:192',
-                'email' => 'email|required|unique:users|max:192',
-            ]);
-
-            $email = $request->input('email');
-            $password = Str::random(64);
-
-            $user = User::create([
-                'name' => $request->input('name'),
-                'email' => $email,
-                'password' => bcrypt($password),
-            ]);
-
-            Auth::attempt([
-                'email' => $email,
-                'password' => $password,
-            ]);
+        if (isset($user) && $this->termsAccepted()) {
+            return $user;
         }
+
+        if (isset($user) && ! $this->termsAccepted()) {
+            $request->validate([
+                'accept_terms' => 'boolean|required',
+            ],
+            [
+                'accept_terms.required' => __('You must accept the Terms and Conditions.')
+            ]);
+
+            $user->terms_accepted_at = Carbon::now();
+            $user->save();
+
+            return $user;
+        }
+
+        $request->validate([
+            'name' => 'string|required|max:192',
+            'email' => 'email|required|unique:users|max:192',
+            'accept_terms' => 'boolean|required',
+        ],
+        [
+            'accept_terms.required' => __('You must accept the Terms and Conditions.')
+        ]);
+
+        $email = $request->input('email');
+        $password = Str::random(64);
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $email,
+            'password' => bcrypt($password),
+            'terms_accepted_at' => Carbon::now(),
+        ]);
+
+        Auth::attempt([
+            'email' => $email,
+            'password' => $password,
+        ]);
 
         return $user;
     }
@@ -196,6 +248,6 @@ class PhotoController extends Controller
         $photo->delete();
 
         return redirect()->route('photos.index')
-            ->with('status', "Photo [{$photo->title}] deleted!");
+            ->with('status', "Photo [{$photo->social_handle}] deleted!");
     }
 }

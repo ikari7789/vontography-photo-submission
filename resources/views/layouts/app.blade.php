@@ -88,6 +88,10 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <div class="footer-copyright text-center py-3">
+            © {{ date('Y') }} Copyright <a href="https://vontography.com/">Vontography.com</a> • <a href="{{ route('terms.show') }}">{{ __('Terms and Conditions') }}</a>
+        </div>
     </div>
 </body>
 </html>

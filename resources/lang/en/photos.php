@@ -32,6 +32,9 @@ return [
             'text' => 'Comments',
             'placeholder' => 'Anything you\'d like to add?',
         ],
+        'accept_terms' => [
+            'text' => 'I accept the <a href=":terms_url" target="_blank" rel="noopener noreferrer">Terms and Conditions <font-awesome-icon icon="external-link-alt" /></a>',
+        ],
         'uploader' => [
             'text' => 'Uploader',
         ],
@@ -50,9 +53,11 @@ return [
         'create' => [
             'title' => 'Submit Photo',
             'form_title' => 'Photo Submission',
-            'alert' => 'Name / Email are used for managing your uploads. If you haven\'t already registered, '
+            'one_photo_per_critique_warning' => 'Only one photo allowed per critique.',
+            'photographer_permission_warning' => 'If you are not the photographer, you <strong>MUST</strong> get approval from the photographer. Please mention that you have done so in the comments section.',
+            'username_email_warning' => 'Name / Email are used for managing your uploads. If you haven\'t already registered, '
                       .'an account will be generated automatically for you. Since no one should know your '
-                      .'password but you, after your initial submission, please request to <a href=":REQUEST_URL">reset your password</a>.',
+                      .'password but you, after your initial submission, please request to <a href=":request_url">reset your password</a>.',
             'submit' => 'Submit Photo',
         ],
     ],

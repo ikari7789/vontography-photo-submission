@@ -16,9 +16,17 @@
                     <form method="POST" action="{{ route('photos.store') }}" enctype="multipart/form-data">
                         @csrf
 
+                        <p class="alert alert-info">
+                            {{ __('photos.pages.create.one_photo_per_critique_warning') }}
+                        </p>
+
+                        <p class="alert alert-danger">
+                            {!! __('photos.pages.create.photographer_permission_warning') !!}
+                        </p>
+
                         @guest
                         <p class="alert alert-info">
-                            {!! __('photos.pages.create.alert', ['request_url' => route('password.request')]) !!}
+                            {!! __('photos.pages.create.username_email_warning', ['request_url' => route('password.request')]) !!}
                         </p>
                         <div class="form-group row">
                             <div class="form-group col-md-6 mb-3">
@@ -124,6 +132,22 @@
                                 </span>
                             @endif
                         </div>
+
+                        @if (! $terms_accepted )
+                        <div class="form-check">
+                            <input type="checkbox" id="accept_terms" class="form-check-input{{ $errors->has('accept_terms') ? ' is-invalid' : '' }}" name="accept_terms" value="1" required>
+
+                            <label for="accept_terms" class="form-control-label">
+                                {!! __('photos.attributes.accept_terms.text', ['terms_url' => route('terms.show')]) !!}
+                            </label>
+
+                            @if ($errors->has('accept_terms'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('accept_terms') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        @endif
 
                         <button type="submit" class="btn btn-primary">
                             {{ __('photos.pages.create.submit') }}

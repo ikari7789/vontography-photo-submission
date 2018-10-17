@@ -47,19 +47,14 @@ class PhotoController extends Controller
             $quality ?? 90
         );
 
-        $response = Cache::remember($key, 30, function() use ($photo, $width, $height, $quality) {
-            $image = Image::make(Storage::get($photo->filepath));
-
-            if ($width !== null || $height !== null) {
-                $image->resize($width, $height, function ($constraint) {
+        $image = Image::cache(function ($image) use ($photo, $width, $height) {
+            return $image->make(Storage::get($photo->filepath))
+                ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
-            }
-
-            return $image->response('jpeg', $quality);
         });
 
-        return $response;
+        return Image::make($image)->response('jpeg', $quality);
     }
 }

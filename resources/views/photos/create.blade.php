@@ -52,20 +52,6 @@
                         @endguest
 
                         <div class="form-group">
-                            <label for="title" class="form-control-label">
-                                 {{ __('photos.attributes.title.text') }}<span class="text-danger">*</span>
-                            </label>
-
-                            <input  id="title" type="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" placeholder="{{ __('photos.attributes.title.placeholder') }}" value="{{ old('title') }}" required>
-
-                            @if ($errors->has('title'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('title') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
                             <label for="photo" class="form-control-label">
                                 {{ __('photos.attributes.photo.text') }}<span class="text-danger">*</span>
                             </label>
@@ -82,6 +68,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="social_handle" class="form-control-label">
+                                 {{ __('photos.attributes.social_handle.text') }}<span class="text-danger">*</span>
+                            </label>
+
+                            <input id="social_handle" type="text" class="form-control{{ $errors->has('social_handle') ? ' is-invalid' : '' }}" name="social_handle" placeholder="{{ __('photos.attributes.social_handle.placeholder') }}" value="{{ old('social_handle') }}" required>
+
+                            @if ($errors->has('social_handle'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('social_handle') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
                             <label for="featuring" class="form-control-label">
                                 {{ __('photos.attributes.featuring.text') }}
                             </label>
@@ -91,6 +91,22 @@
                             @if ($errors->has('featuring'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('featuring') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="camera_metadata" class="form-control-label">
+                                {{ __('photos.attributes.camera_metadata.text') }}
+                            </label>
+
+                            <textarea id="camera_metadata" class="form-control{{ $errors->has('camera_metadata') ? ' is-invalid' : '' }}" style="height: 6em" name="camera_metadata" placeholder="{{ __('photos.attributes.camera_metadata.placeholder') }}" />{{ old('camera_metadata') }}</textarea>
+
+                            <small id="camera_metadata-help" class="form-text text-muted">{{ __('photos.attributes.camera_metadata.description') }}</small>
+
+                            @if ($errors->has('camera_metadata'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('camera_metadata') }}</strong>
                                 </span>
                             @endif
                         </div>

@@ -21,7 +21,7 @@ class Photo extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
+        'social_handle',
         'filepath',
         'url',
         'location',

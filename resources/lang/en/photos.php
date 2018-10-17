@@ -10,7 +10,7 @@ return [
             'text' => 'Email',
             'placeholder' => 'john.doe@example.com',
         ],
-        'title' => [
+        'social_handle' => [
             'text' => 'Social Media Handle',
             'placeholder' => 'Photography Social Media Name'
         ],
@@ -18,6 +18,11 @@ return [
             'text' => 'Photo',
             'description' => 'Minimum resolution: 1920px x 1080px (or 1080px x 1920px)',
             'placeholder' => 'Select photo',
+        ],
+        'camera_metadata' => [
+            'text' => 'Camera Information',
+            'description' => 'Camera model, settings, lens model, lighting equipment, etc.',
+            'placeholder' => "Camera: Canon EOS 5D\nSettings: 1/200, f/2.8, ISO 100\nLens: EF 70-300mm f/4-5.6 IS II USM",
         ],
         'featuring' => [
             'text' => 'Featuring',

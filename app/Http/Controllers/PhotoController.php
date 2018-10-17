@@ -65,7 +65,7 @@ class PhotoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'string|required|max:192',
+            'social_handle' => 'string|required|max:192',
             'photo' => [
                 'image',
                 'required',
@@ -77,6 +77,7 @@ class PhotoController extends Controller
                 ]),
             ],
             'featuring' => 'string|nullable',
+            'camera_metadata' => 'string|nullable',
             'comment' => 'string|nullable',
         ]);
 
@@ -87,11 +88,12 @@ class PhotoController extends Controller
         $path = $request->photo->store('photos');
 
         $photo = new Photo([
-            'title' => $request->input('title'),
+            'social_handle' => $request->input('social_handle'),
             'filepath' => $path,
             'url' => $request->input('url'),
             'location' => $request->input('location'),
             'featuring' => $request->input('featuring'),
+            'camera_metadata' => $request->input('camera_metadata'),
             'comment' => $request->input('comment'),
         ]);
 
@@ -196,6 +198,6 @@ class PhotoController extends Controller
         $photo->delete();
 
         return redirect()->route('photos.index')
-            ->with('status', "Photo [{$photo->title}] deleted!");
+            ->with('status', "Photo [{$photo->social_handle}] deleted!");
     }
 }

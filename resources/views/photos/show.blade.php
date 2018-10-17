@@ -12,17 +12,25 @@
             <div class="card">
                 <div class="card-body">
                     <a href="{{ route('uploads.photos.show', ['id' => $photo->id, 'original' => 1]) }}">
-                        <img class="img-thumbnail img-fluid mx-auto d-block" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->title }}" />
+                        <img class="img-thumbnail img-fluid mx-auto d-block" src="{{ route('uploads.photos.show', ['id' => $photo->id, 'width' => 500]) }}" alt="{{ $photo->social_handle }}" />
                     </a>
                     <dl class="row mt-3">
                         <dt class="col-sm-3">{{ __('photos.attributes.uploader.text') }}</dt>
                         <dd class="col-sm-9">{{ $photo->user->name }}</dd>
-                        <dt class="col-sm-3">{{ __('photos.attributes.title.text') }}</dt>
-                        <dd class="col-sm-9">{{ '@'.$photo->title }}</dd>
+                        <dt class="col-sm-3">{{ __('photos.attributes.social_handle.text') }}</dt>
+                        <dd class="col-sm-9">{{ '@'.$photo->social_handle }}</dd>
                         @if (isset($photo->featuring))
                             <dt class="col-sm-3">{{ __('photos.attributes.featuring.text') }}</dt>
                             <dd class="col-sm-9">
                                 @foreach (explode("\n", $photo->featuring) as $line)
+                                    {{ $line }}<br />
+                                @endforeach
+                            </dd>
+                        @endif
+                        @if (isset($photo->camera_metadata))
+                            <dt class="col-sm-3">{{ __('photos.attributes.camera_metadata.text') }}</dt>
+                            <dd class="col-sm-9">
+                                @foreach (explode("\n", $photo->camera_metadata) as $line)
                                     {{ $line }}<br />
                                 @endforeach
                             </dd>

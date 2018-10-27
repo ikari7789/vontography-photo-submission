@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use lsolesen\pel\PelJpeg;
+use lsolesen\pel\PelTag;
 
 class Photo extends Model
 {
@@ -39,5 +42,52 @@ class Photo extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function metadata(): array
+    {
+        $metadata = [];
+
+        $jpeg = new PelJpeg(Storage::path($this->filepath));
+
+        if (is_null($jpeg)) {
+            return $metadata;
+        }
+
+        $exif = $jpeg->getExif();
+
+        if (is_null($exif)) {
+            return $metadata;
+        }
+
+        $tiff = $exif->getTiff();
+
+        if (is_null($tiff)) {
+            return $metadata;
+        }
+
+        $ifd = $tiff->getIfd();
+
+        if (is_null($ifd)) {
+            return $metadata;
+        }
+
+        foreach ($ifd->getEntries() as $entry) {
+            $key   = PelTag::getName($entry->getIfdType(), $entry->getTag());
+            $value = $entry->getText();
+
+            $metadata[$key] = $value;
+        }
+
+        foreach ($ifd->getSubIfds() as $type => $subIfd) {
+            foreach ($subIfd->getEntries() as $entry) {
+                $key   = PelTag::getName($entry->getIfdType(), $entry->getTag());
+                $value = $entry->getText();
+
+                $metadata[$key] = $value;
+            }
+        }
+
+        return $metadata;
     }
 }

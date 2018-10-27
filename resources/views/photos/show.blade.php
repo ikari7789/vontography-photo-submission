@@ -44,6 +44,22 @@
                             </dd>
                         @endif
                     </dl>
+                    @php
+                        $metadata = $photo->metadata();
+                    @endphp
+                    @if (! empty($metadata))
+                        <h5>Photo Metadata</h5>
+                        <table class="table table-sm table-responsive">
+                            <tbody>
+                            @foreach ($metadata as $key => $value)
+                                <tr>
+                                  <td>{{ $key }}</td>
+                                  <td>{{ $value }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <div class="card-footer text-right">
                     @can('delete', $photo)

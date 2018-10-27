@@ -53,7 +53,6 @@ class CustomDimensions implements Rule
 
         if ($this->failsBasicDimensionChecks($this->constraints, $width, $height) ||
             $this->failsRatioCheck($this->constraints, $width, $height)) {
-
             return false;
         }
 
@@ -134,7 +133,8 @@ class CustomDimensions implements Rule
         }
 
         list($numerator, $denominator) = array_replace(
-            [1, 1], array_filter(sscanf($parameters['ratio'], '%f/%d'))
+            [1, 1],
+            array_filter(sscanf($parameters['ratio'], '%f/%d'))
         );
 
         $precision = 1 / max($width, $height);

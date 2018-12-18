@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use lsolesen\pel\PelDataWindowOffsetException;
 use lsolesen\pel\PelJpeg;
 use lsolesen\pel\PelJpegInvalidMarkerException;
 use lsolesen\pel\PelTag;
@@ -54,6 +55,8 @@ class Photo extends Model
         try {
             $jpeg = new PelJpeg(Storage::path($this->filepath));
         } catch (PelJpegInvalidMarkerException $e) {
+            // Just skip the error
+        } catch (PelDataWindowOffsetException $e) {
             // Just skip the error
         }
 

@@ -31,6 +31,7 @@ class Photo extends Model
         'location',
         'featuring',
         'comment',
+        'camera_metadata',
     ];
 
     /**

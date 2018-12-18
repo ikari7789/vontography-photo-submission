@@ -8,11 +8,9 @@ $factory->define(App\Photo::class, function (Faker $faker) {
 
     $sentence = $faker->sentence(5);
 
-    $photosDir = Storage::path('photos');
+    Storage::makeDirectory('photos');
 
-    Storage::makeDirectory($photosDir);
-
-    $photo = $faker->image($photosDir);
+    $photo = $faker->image(Storage::path('photos'));
 
     return [
         'user_id' => $user ?: factory(App\User::class)->create()->id,

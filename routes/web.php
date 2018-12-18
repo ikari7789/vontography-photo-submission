@@ -11,16 +11,15 @@
 |
 */
 
-Route::get('/', 'PhotoController@index')->name('photos.index');
-
-Route::resource('photos', 'PhotoController', ['except' => [
-    'index',
-]]);
-
-Route::namespace('Uploads')->prefix('uploads')->group(function () {
-    Route::get('photos/{photo}', 'PhotoController@show')->name('uploads.photos.show');
-});
-
-Route::get('terms', 'TermsController@show')->name('terms.show');
-
 Auth::routes();
+Route::get('/', 'PhotoController@index')->name('photos.index');
+Route::get('terms', 'TermsController@show')->name('terms.show');
+Route::middleware('auth:web')->group(function() {
+    Route::resource('photos', 'PhotoController', ['except' => [
+        'index',
+    ]]);
+
+    Route::namespace('Uploads')->prefix('uploads')->group(function () {
+        Route::get('photos/{photo}', 'PhotoController@show')->name('uploads.photos.show');
+    });
+});

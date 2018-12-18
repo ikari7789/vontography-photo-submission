@@ -11,6 +11,19 @@ use lsolesen\pel\PelTag;
 
 class Photo extends Model
 {
+    /** List of metadata fields to display. */
+    const METADATA_FIELDS = [
+        'ColorSpace',
+        'DateTimeOriginal',
+        'ExposureProgram',
+        'ExposureTime',
+        'FNumber',
+        'FocalLength',
+        'ISOSpeedRatings',
+        'Model',
+        'Software',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -98,6 +111,11 @@ class Photo extends Model
             }
         }
 
-        return $metadata;
+        return collect($metadata)
+            ->filter(function ($value, $key) {
+                return in_array($key, static::METADATA_FIELDS);
+            })
+            ->sortKeys()
+            ->toArray();
     }
 }

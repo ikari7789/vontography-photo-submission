@@ -12,6 +12,9 @@ use InvalidArgumentException;
 
 class PhotoController extends Controller
 {
+    /** Number of minutes to cache image files for. */
+    const IMAGE_CACHE_TIME = 60 * 24;
+
     /**
      * Display the specified resource.
      *
@@ -53,8 +56,8 @@ class PhotoController extends Controller
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
-        });
+        }, static::IMAGE_CACHE_TIME, true);
 
-        return Image::make($image)->response('jpeg', $quality);
+        return $image->response('jpeg', $quality);
     }
 }

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use lsolesen\pel\PelJpeg;
+use lsolesen\pel\PelJpegInvalidMarkerException;
 use lsolesen\pel\PelTag;
 
 class Photo extends Model
@@ -48,7 +49,12 @@ class Photo extends Model
     {
         $metadata = [];
 
-        $jpeg = new PelJpeg(Storage::path($this->filepath));
+        $jpeg = null;
+        try {
+            $jpeg = new PelJpeg(Storage::path($this->filepath));
+        } catch (PelJpegInvalidMarkerException $e) {
+            // Just skip the error
+        }
 
         if (is_null($jpeg)) {
             return $metadata;

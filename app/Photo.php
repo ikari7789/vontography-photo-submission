@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use lsolesen\pel\PelDataWindowOffsetException;
 use lsolesen\pel\PelJpeg;
@@ -104,10 +106,14 @@ class Photo extends Model
 
         foreach ($ifd->getSubIfds() as $type => $subIfd) {
             foreach ($subIfd->getEntries() as $entry) {
-                $key   = PelTag::getName($entry->getIfdType(), $entry->getTag());
-                $value = $entry->getText();
+                try {
+                    $key   = PelTag::getName($entry->getIfdType(), $entry->getTag());
+                    $value = $entry->getText();
 
-                $metadata[$key] = $value;
+                    $metadata[$key] = $value;
+                } catch (Exception $e) {
+                    Log::warning($e);
+                }
             }
         }
 
